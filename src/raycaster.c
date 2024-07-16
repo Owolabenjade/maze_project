@@ -20,7 +20,7 @@ void castRays(SDL_Renderer *renderer, Player *player) {
 
         int stepX, stepY;
         int hit = 0;
-        int side;
+        int side;  // 0 for NS, 1 for EW
 
         if (rayDirX < 0) {
             stepX = -1;
@@ -60,7 +60,15 @@ void castRays(SDL_Renderer *renderer, Player *player) {
         int drawEnd = lineHeight / 2 + SCREEN_HEIGHT / 2;
         if (drawEnd >= SCREEN_HEIGHT) drawEnd = SCREEN_HEIGHT - 1;
 
-        SDL_SetRenderDrawColor(renderer, side == 1 ? 200 : 255, 0, 0, 255);
+        // Set color based on wall orientation
+        if (side == 0) {
+            // North-South walls
+            SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);  // Red
+        } else {
+            // East-West walls
+            SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);  // Blue
+        }
+
         SDL_RenderDrawLine(renderer, x, drawStart, x, drawEnd);
     }
 }
